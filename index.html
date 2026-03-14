@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Trading Learning App</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <script>
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyDNtQ4nbynY7jhrDggqJvOnlilfiWCTWc0",
+      authDomain: "smc-complete-guide.firebaseapp.com",
+      projectId: "smc-complete-guide",
+      storageBucket: "smc-complete-guide.firebasestorage.app",
+      messagingSenderId: "507873147136",
+      appId: "1:507873147136:web:69e0f61bdcb52ede7b5be5",
+      measurementId: "G-V4HMX1WG0F"
+    };
+
+    // Initialize Firebase
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const auth = firebase.auth();
+    const database = firebase.database();
+
+    // SHOW APP AND HIDE ALL PAGES
+    function showPage(pageId) {
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(p => p.style.display = 'none');
+      const page = document.getElementById(pageId);
+      if (page) page.style.display = 'block';
+    }
+
+    // LOGIN FUNCTION
+    function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+          document.getElementById("message").innerText = "Login successful!";
+          showApp();
+        })
+        .catch((error) => {
+          document.getElementById("message").innerText = error.message;
+        });
+    }
+
+    // SIGNUP FUNCTION
+    function signup() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      auth.createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          document.getElementById("message").innerText = "Signup successful!";
+          showApp();
+        })
+        .catch((error) => {
+          document.getElementById("message").innerText = error.message;
+        });
+    }
+
+    // LOGOUT FUNCTION
+    function logout() {
+      auth.signOut().then(() => {
+        document.getElementById("app").style.display = "none";
+        document.getElementById("loginPage").style.display = "block";
+      });
+    }
+
+    // SHOW APP AND HIDE LOGIN
+    function showApp() {
+      document.getElementById("loginPage").style.display = "none";
+      document.getElementById("app").style.display = "block";
+      // show default page inside app
+      showPage('home');
+    }
+
+    // KEEP USER LOGGED IN
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        showApp();
+      } else {
+        document.getElementById("app").style.display = "none";
+        document.getElementById("loginPage").style.display = "block";
+      }
+    });
+
+    // OPEN LESSON
+    function openLesson(lesson) {
+      showPage('lesson');
+      document.getElementById('lesson-title').innerText = lesson;
+      document.getElementById('lesson-text').innerText = "Content for " + lesson;
+    }
+
+    // OPEN CATEGORY
+    function openCategory(cat) {
+      showPage(cat);
+    }
+  </script>
+
+</head>
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="loginPage" style="display:block; text-align:center; padding:50px;">
+  <h2>Login / Sign Up</h2>
+  <input id="email" type="email" placeholder="Email" style="margin:5px; padding:8px;"><br>
+  <input id="password" type="password" placeholder="Password" style="margin:5px; padding:8px;"><br>
+  <button onclick="login()" style="margin:5px;">Login</button>
+  <button onclick="signup()" style="margin:5px;">Sign Up</button>
+  <div id="message" style="color:red; margin-top:20px;"></div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app" style="display:none;">
+  
+<!-- APP TITLE -->
+
+<header>
+<header class="main-header">
+
+  <div class="avatar-container" onclick="showPage('profile')">
+
+    <div class="mini-avatar">🙋</div>
+
+  </div>
+
+  <div class="header-status">
+
+    <span class="status-dot"></span>
+
+    Live Market
+
+  </div>
+
+</header>
+
+  
+<!-- HOME PAGE -->
+<div id="home" class="page">
+ <h2 style="margin-bottom:20px;">Welcome Trader 👋</h2>
+  <div class="tip-box">
+<h3>📌 Daily Trading Tip</h3>
+
+<p id="daily-tip"></p>
+
+</div>
+
+<!-- Quick actions -->
+
+<div class="home-cards">
+
+<div class="home-card" onclick="showPage('market-basics')">
+📘
+<h3>Market Basics</h3>
+<p>Learn crypto fundamentals</p>
+</div>
+
+<div class="home-card" onclick="showPage('smc-Concepts')">
+📊
+<h3>SMC Concepts</h3>
+<p>Smart Money strategy</p>
+</div>
+
+<div class="home-card" onclick="showPage('psychology')">
+🧠
+<h3>Trading Psychology</h3>
+<p>Master discipline</p>
+</div>
+
+</div>
+
+
+  </div>
+
+  <div id="smc" class="page">
+  <h3>Choose Category</h3>
+<button onclick="openCategory('market-basics')">Market Basics</button>
+
+<button onclick="openCategory('smc-Concepts')">SMC Concepts</button>
+
+<button onclick="openCategory('psychology')">Trading Psychology</button>
+
+</div>
+
+<!-- SMC PAGE -->
+
+<div id="smc-Concepts" class="page">
+
+<h3>SMC Concepts</h3>
+
+<button onclick="openLesson('support and resistance')">support and resistance</button>
+
+<button onclick="openLesson('market structure')">Market structure</button>
+
+<button onclick="openLesson('Fair Value Gap')">Fair Value Gap</button>
+<button onclick="openLesson('Order Block')">Order Block</button>
+<button onclick="openLesson('Inducement')">Inducement</button>
+<button onclick="openLesson('Liquidity')">Liquidity</button> 
+<button onclick="openLesson('Fibonacci Retracement')">Fibonacci Retracement</button>
+  </div>
+
+<!-- PSYCHOLOGY PAGE -->
+
+<div id="profile" class="page">
+ <div class="rofile-header">
+  <div class="Profile-main-avatar">🙋</div>
+  <h3>Trader</h3>
+  <p class="user-handle">@future_trader</p>
+  <div class="badge">SMC Apprentice</div>
+</div>
+
+<div class="stats-row">
+  <div class="stat-card">
+    <span class="stat-value">12</span>
+    <span class="stat-label">Lessons</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-value">85%</span>
+    <span class="stat-label">Quiz Score</span>
+  </div>
+</div>
+
+<div class="settings-group">
+  <div class="settings-item" onclick="showPage('edit-profile')"><span>👤 Edit Profile</span><i class="arrow">›</i></div>
+  <div class="settings-item">
+    <span>🔔 Notifications</span>
+    <i class="arrow">›</i>
+  </div>
+</div>
+
+<div class="settings-group">
+  <div class="settings-item">
+    <span>🛡️ Security & Password</span>
+    <i class="arrow">›</i>
+  </div>
+  <div class="settings-item">
+    <span>📜 Terms & Conditions</span>
+    <i class="arrow">›</i>
+  </div>
+</div>
+<button class="logout-btn" onclick="logout()">Log Out</button>
+
+
+  </div>
+
+<div id="psychology" class="page">
+  <h3>Trading Psychology</h3>
+
+<button onclick="openLesson('Discipline')">Discipline</button>
+
+<button onclick="openLesson('Patience')">Patience</button>
+<button onclick="openLesson('fomo')">FOMO</button> 
+
+  </div>
+
+<!-- MARKET PAGE -->
+<div id="market" class="page">
+  <div class="tradingview-widget-container" style="height:800px; width:100%;">
+
+  <div id="tradingview_chart" style="height:100%; width:100%;"></div>
+
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+
+  <script type="text/javascript">
+
+  new TradingView.widget({
+
+    "autosize": true, // This makes it fill the container
+
+    "symbol": "BINANCE:BTCUSDT",
+
+    "interval": "H1", // Set to 1 Hour for better SMC practice
+
+    "timezone": "Etc/UTC",
+
+    "theme": "dark",
+
+    "style": "1",
+
+    "locale": "en",
+
+    "toolbar_bg": "#131722",
+
+    "enable_publishing": false,
+
+    "withdateranges": true, // Adds the time buttons at the bottom
+
+    "hide_side_toolbar": false, // This MUST be 'false' so they can see the DRAWING tools
+
+    "allow_symbol_change": true,
+
+    "container_id": "tradingview_chart"
+
+  });
+
+  </script>
+
+</div>
+
+
+</div>
+   
+  <div id="market-basics" class="page">
+
+<h3>Market Basics</h3>
+
+<button onclick="openLesson('block chain technology')">block chain tech</button>
+
+<button onclick="openLesson('what is crypto')">What is Crypto</button>
+<button onclick="openLesson('Candlestick')">Candlestick</button>
+    <button onclick="openLesson('Trading Terminologies')">Trading Terminologies</button>
+    <button onclick="openLesson('Risk Management')">Risk management</button>
+        
+ </div>
+
+<!-- LESSON PAGE -->
+<div id="lesson" class="page">
+
+<h2 id="lesson-title"></h2>
+
+<div id="lesson-text"></div>
+
+<img id="lesson-img">
+  
+</div> 
+<div id="edit-profile" class="page">
+  <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+    <button onclick="showPage('profile')" style="width: auto; background: none; padding: 5px; color: #60a5fa;">‹ Back</button>
+    <h3 style="margin: 0;">Edit Profile</h3>
+  </div>
+
+  <div class="settings-group" style="padding: 20px; text-align: left;">
+    <div class="input-group">
+      <label style="color: #94a3b8; font-size: 12px;">DISPLAY NAME</label>
+      <input type="text" id="display-name-input" placeholder="e.g. Abubakar Musa" 
+             style="width: 100%; padding: 12px; margin-top: 5px; background: #0f172a; border: 1px solid #334155; color: white; border-radius: 8px;">
+    </div>
+
+    <div class="input-group" style="margin-top: 20px;">
+      <label style="color: #94a3b8; font-size: 12px;">USERNAME</label>
+      <input type="text" id="username-input" placeholder="e.g. future_ceo" 
+             style="width: 100%; padding: 12px; margin-top: 5px; background: #0f172a; border: 1px solid #334155; color: white; border-radius: 8px;">
+    </div>
+
+    <button onclick="updateProfileData()" style="background: #22c55e; margin-top: 30px;">Save Changes</button>
+  </div>
+</div>
+
+<!-- BOTTOM NAVIGATION -->
+
+<nav>
+<button onclick="showPage('home')">🏠 Home</button>
+
+<button onclick="showPage('smc')">📊 SMC</button>
+
+<button onclick="showPage('market')">📈Market</button>
+
+<button onclick="showPage('profile')">profile</button>
+
+</nav>
+</div>
+  <!-- end of app -->
+
+<script src="script.js"></script>
+<div id="custom-alert" class="toast-popup">
+
+  <div class="toast-content">
+
+    <span class="toast-icon">✅</span>
+
+    <span id="toast-message">Profile Updated!</span>
+
+  </div>
+
+</div>
+<div id="custom-alert" class="toast-popup">
+  <div class="toast-content">
+    <span class="toast-icon">✅</span>
+    <span id="toast-message">Profile Updated!</span>
+  </div>
+</div>
+
+
+</body>
+
+</html>
