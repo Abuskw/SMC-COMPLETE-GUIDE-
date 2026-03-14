@@ -1,0 +1,480 @@
+/* GLOBAL STYLES */
+body {
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  margin: 0;
+  background: #0f172a;
+  color: white;
+  text-align: center;
+  overflow: hidden; /* Prevents the whole screen from bouncing */
+  height: 100svh;
+}
+
+header {
+  background: #1e293b;
+  padding: 15px;
+  height: 60px;
+  box-sizing: border-box;
+}
+
+/* PAGE LOGIC - Fixed with dots */
+.page {
+  display: none; 
+  padding: 20px;
+  height: calc(100svh - 60px); 
+  overflow-y: auto; /* Allows scrolling inside the page only */
+  padding-bottom: 100px; 
+  box-sizing: border-box;
+  text-align: left;
+}
+
+/* THE POWER RULE - Forces the page to show */
+.page.active {
+  display: block !important;
+}
+
+/* BUTTONS & UI */
+button {
+  display: block;
+  width: 90%;
+  margin: 10px auto;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+#lesson-img{
+
+width:100%;
+
+max-width:400px;
+
+display:block;
+
+margin:20px auto;
+
+border-radius:10px;
+
+}
+
+
+
+/* TRADINGVIEW CONTAINER */
+.tradingview-widget-container {
+    height: 80vh; 
+    width: 100%;
+}
+
+/* FLOATING NAV BAR - Ensure this is included! */
+nav {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 400px;
+  height: 65px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 35px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1000;
+}
+
+nav button {
+  width: auto;
+  background: none;
+  margin: 0;
+  font-size: 12px;
+}
+
+.main-header {
+
+  height: 65px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 0 20px;
+
+  background: rgba(15, 23, 42, 0.8);
+
+  backdrop-filter: blur(10px);
+
+  position: sticky;
+
+  top: 0;
+
+  z-index: 1000;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+}
+
+.avatar-container {
+
+  cursor: pointer;
+
+}
+
+.mini-avatar {
+
+  width: 38px;
+
+  height: 38px;
+
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+
+  border-radius: 50%;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  font-size: 18px;
+
+  border: 2px solid rgba(255, 255, 255, 0.1);
+
+}
+
+.header-status {
+
+  font-size: 12px;
+
+  color: #94a3b8;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+
+}
+
+.status-dot {
+
+  width: 8px;
+
+  height: 8px;
+
+  background: #22c55e;
+
+  border-radius: 50%;
+
+  box-shadow: 0 0 8px #22c55e;
+
+}
+
+.welcome-section {
+
+  padding: 20px 0;
+
+  text-align: left;
+
+}
+
+/* Profile Header */
+
+.profile-header {
+
+  text-align: center;
+
+  padding: 20px 0;
+
+}
+
+.user-handle {
+
+  color: #64748b;
+
+  font-size: 14px;
+
+  margin-top: -10px;
+
+}
+
+.badge {
+
+  display: inline-block;
+
+  background: rgba(37, 99, 235, 0.2);
+
+  color: #60a5fa;
+
+  padding: 4px 12px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+
+  font-weight: bold;
+
+  margin-top: 10px;
+
+}
+
+/* Progress Cards */
+
+.stats-row {
+
+  display: flex;
+
+  gap: 15px;
+
+  margin: 20px 0;
+
+}
+
+.stat-card {
+
+  flex: 1;
+
+  background: #1e293b;
+
+  padding: 15px;
+
+  border-radius: 12px;
+
+  text-align: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.05);
+
+}
+
+.stat-value {
+
+  display: block;
+
+  font-size: 20px;
+
+  font-weight: bold;
+
+  color: #2563eb;
+
+}
+
+.stat-label {
+
+  font-size: 12px;
+
+  color: #94a3b8;
+
+}
+
+/* Settings Items */
+
+.settings-group {
+
+  background: #1e293b;
+
+  border-radius: 12px;
+
+  margin-bottom: 15px;
+
+  overflow: hidden;
+
+}
+
+.settings-item {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  padding: 16px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+  font-size: 15px;
+
+  cursor: pointer;
+
+}
+
+.settings-item:last-child {
+
+  border-bottom: none;
+
+}
+
+.logout-btn {
+
+  background: #ef4444 !important;
+
+  margin-top: 20px;
+
+}
+
+.input-group {
+
+  text-align: left;
+
+  margin-bottom: 20px;
+
+}
+
+.input-group label {
+
+  display: block;
+
+  font-size: 13px;
+
+  color: #94a3b8;
+
+  margin-bottom: 8px;
+
+  margin-left: 5px;
+
+}
+
+.input-group input {
+
+  width: 100%;
+
+  padding: 14px;
+
+  background: #1e293b;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: 10px;
+
+  color: white;
+
+  font-size: 16px;
+
+  box-sizing: border-box;
+
+}
+
+.input-group input:focus {
+
+  outline: none;
+
+  border-color: #2563eb;
+
+}
+
+input:focus {
+
+  outline: none;
+
+  border-color: #2563eb !important;
+
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.2);
+
+}
+
+nav button:active, nav button.current {
+
+  color: #2563eb;
+
+  transform: scale(1.1);
+
+  transition: 0.2s;
+
+}
+.toast-popup {
+  position: fixed;
+  bottom: -100px; /* Hidden initially */
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(30, 41, 59, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px 24px;
+  border-radius: 50px;
+  color: white;
+  z-index: 9999;
+  transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.toast-popup.show {
+  bottom: 100px; /* Slides up into view */
+}
+
+.toast-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.toast-icon {
+  background: #22c55e;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 10px;
+}
+.home-cards{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:15px;
+
+}
+
+.home-card{
+
+background:#1e293b;
+
+padding:20px;
+
+border-radius:12px;
+
+text-align:center;
+
+cursor:pointer;
+
+}
+
+.home-card h3{
+
+margin:10px 0 5px;
+
+}
+
+.home-card p{
+
+font-size:13px;
+
+color:#94a3b8;
+
+}
+.tip-box{
+background:#1e293b;
+padding:15px;
+border-radius:10px;
+margin:15px 0;
+}
+
+.tip-box h3{
+margin-bottom:10px;
+color:#38bdf8;
+}
+
+.tip-box p{
+font-size:14px;
+color:#e2e8f0;
+}
