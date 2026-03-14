@@ -478,3 +478,28 @@ color:#38bdf8;
 font-size:14px;
 color:#e2e8f0;
 }
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    body {
+        font-size: 14px; /* Makes text slightly smaller on phones */
+    }
+
+    .container {
+        padding: 15px; /* Shrinks the padding so things aren't squished */
+    }
+
+    h1 {
+        font-size: 1.8rem; /* Shrinks the title size */
+    }
+
+    .lesson-card {
+        margin-bottom: 15px;
+        padding: 15px;
+    }
+
+    /* Make buttons easier to tap with a thumb */
+    button {
+        width: 100%; 
+        padding: 12px;
+    }
+}
